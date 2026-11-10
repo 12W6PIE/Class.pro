@@ -128,3 +128,91 @@ To satisfy the **Continuous Progress Rule**, the student must bridge four concre
   - *Scientific Delta:* Separates true context-following capability from benchmark contamination in local quantized RAG using paired factual/counterfactual accuracy and abstention deltas.
 - **Target Publication Tier:** **Tier 2 / Tier 3** (JCR Q3/Q4 or international conference proceedings).
 - **Career Trajectory Alignment:** Equips the engineer to diagnose and mitigate stale-knowledge override when deploying RAG over rapidly changing internal APIs and proprietary company documentation.
+
+
+---
+
+## 6. Class 2 Output: Selected Idea, Working Titles & SOTA Query Payload (Prompt 4)
+
+### Selected Project Idea
+- **Selected Candidate:** **Candidate 1** — *Quantization $\times$ Retrieval Interaction on Faithfulness and Abstention in Educational RAG* (integrating structural code-preserving chunking from Candidate 2 and NLI + human-calibrated evaluation from Candidate 3).
+
+### Preliminary Academic Working Titles
+1. **Primary Working Title:** *Quantization Versus Retrieval Precision: Evaluating Faithfulness and Abstention in Local Retrieval-Augmented Generation Over Computer Science Textbooks Under a 12 GB VRAM Constraint*
+2. **Alternative A (Systems & Efficiency Focus):** *Resource-Constrained Educational RAG: How GGUF Weight Quantization and Hybrid Structural Retrieval Interact to Govern Hallucination and Abstention on Consumer GPUs*
+3. **Alternative B (Evaluation & Contamination Focus):** *Beyond Parametric Memorization: Contamination-Controlled Benchmarking of Quantized Open-Weight LLMs and Hybrid Retrieval Over Openly Licensed Programming Curricula*
+4. **Alternative C (Applied AI Engineering Focus):** *Can Reranked Hybrid Retrieval Compensate for 4-Bit Quantization Loss? An Empirical Study of Grounded Question Answering on a 300-Item Python Textbook Benchmark*
+
+### Structured TOON SOTA Query Handoff Payload (`application/toon`)
+```toon
+sota_verification_payload:
+  orchestrator: "Google Antigravity IDE (01_ideation_ceo)"
+  downstream_consumer: "02_literature_coo & NotebookLM MCP"
+  student_felix_id: "12"
+  selected_candidate: "Candidate 1 - Quantization x Retrieval Interaction in Local Educational RAG"
+  target_databases[3]: "Web of Science (WoS)", "Scopus", "OpenAlex"
+  publication_window: "2020-2026"
+  language: "English"
+  search_queries[4]:
+    - query_id: "Q1_RAG_Quantization_Faithfulness"
+      focus: "Interaction of LLM weight quantization and model scale with RAG grounded faithfulness and hallucination"
+      boolean_string: "(\"Retrieval-Augmented Generation\" OR \"retrieval augmented generation\" OR \"RAG\") AND (\"quantization\" OR \"GGUF\" OR \"GPTQ\" OR \"AWQ\" OR \"4-bit\" OR \"low-bit\" OR \"small language model\" OR \"SLM\") AND (\"faithfulness\" OR \"hallucination\" OR \"grounding\" OR \"factuality\" OR \"abstention\")"
+    - query_id: "Q2_Hybrid_Structural_Chunking_Education"
+      focus: "Structure-aware / code-aware chunking and hybrid BM25 + dense + cross-encoder reranking over textbooks"
+      boolean_string: "(\"Retrieval-Augmented Generation\" OR \"passage retrieval\" OR \"question answering\") AND (\"chunking\" OR \"document segmentation\" OR \"hybrid retrieval\" OR \"BM25\" OR \"reranking\" OR \"cross-encoder\") AND (\"textbook\" OR \"educational\" OR \"computer science education\" OR \"programming course\")"
+    - query_id: "Q3_RAG_Evaluation_NLI_Judge_Calibration"
+      focus: "RAG evaluation frameworks, LLM-as-a-judge biases, NLI claim verification, and human inter-annotator calibration"
+      boolean_string: "(\"RAGAS\" OR \"ARES\" OR \"RAG evaluation\" OR \"LLM-as-a-judge\") AND (\"natural language inference\" OR \"NLI\" OR \"entailment\" OR \"Cohen's kappa\" OR \"human calibration\" OR \"self-preference bias\")"
+    - query_id: "Q4_Parametric_Contamination_Unanswerable_Abstention"
+      focus: "Separating pre-training parametric memory from contextual grounding and unanswerable query abstention in QA"
+      boolean_string: "(\"Retrieval-Augmented Generation\" OR \"open-book question answering\" OR \"in-context learning\") AND (\"parametric knowledge\" OR \"memorization\" OR \"data contamination\" OR \"closed-book\") AND (\"unanswerable\" OR \"abstention\" OR \"selective prediction\" OR \"counterfactual\")"
+  benchmark_seed_references[6]:
+    - "Lewis et al. (2020) - Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (NeurIPS)"
+    - "Thakur et al. (2021) - BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models (NeurIPS Datasets & Benchmarks)"
+    - "Es et al. (2024) - RAGAS: Automated Evaluation of Retrieval Augmented Generation (EACL)"
+    - "Saad-Falcon et al. (2024) - ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems (NAACL)"
+    - "Dettmers et al. / Frantar et al. (2023) - Post-training quantization (GPTQ / NF4 / k-quants) accuracy-memory trade-offs"
+    - "Rajpurkar et al. (2018) - SQuAD 2.0: Know What You Don't Know: Unanswerable Questions for SQuAD (ACL)"
+```
+
+---
+
+## 7. Class 2 Output: Zero-Budget Tooling, Sandboxing & Archiving Blueprint (Prompt 5)
+
+```toon
+tooling_and_execution_blueprint:
+  project_id: "PIE-W6-12-LOCAL-RAG"
+  governance_mode: "Agent-First & Deterministic-First (Google Antigravity IDE)"
+  compute_allocation:
+    local_laptop:
+      hardware: "AMD Ryzen 7 5825U, 16GB RAM (~14GB usable), iGPU only, EndeavourOS Linux"
+      assigned_workloads[5]:
+        - "OpenStax CC-BY corpus ingestion and Markdown/AST structure-aware chunking"
+        - "CPU embedding generation (bge-base-en-v1.5, nomic-embed-text) and FAISS/BM25 index construction"
+        - "Cross-encoder reranking (ms-marco-MiniLM-L-6-v2) and full IR metric calculation (Recall@k, MRR@k, nDCG@k)"
+        - "Sentence-level NLI claim verification via DeBERTa-v3-base/large-MNLI and bootstrap statistical tests"
+        - "Pipeline smoke testing using Qwen2.5-3B-Instruct Q4_K_M on CPU"
+    university_lab_gpu:
+      hardware: "Nvidia RTX 4070 (12GB VRAM), scheduled lab sessions (~3h/week, ~20 GPU-hours total across Weeks 4-10)"
+      assigned_workloads[2]:
+        - "Study 1 generation: 3 retrieval strategies x 300 queries = 900 runs on pinned 8B Q4_K_M backbone (~1.5 GPU-hours)"
+        - "Study 2 generation: 7 model/quantization conditions ({3B, 8B} x {Q4_K_M, Q5_K_M, Q8_0} + 14B Q4_K_M) x 300 queries x 2 (RAG vs Closed-Book) = 4,200 runs (~6.5-10 GPU-hours)"
+      vram_ceiling_enforcement: "Hard cap <= 11.2 GB VRAM (4k context window, 14B Q8_0 strictly excluded)"
+    cloud_fallback:
+      provider: "Google Colab Free Tier (Nvidia T4 16GB VRAM)"
+      resilience_protocol: "JSONL/Parquet append-only shard checkpointing every 25 queries to survive session preemption"
+  docker_sandboxing_spec:
+    base_images[2]: "ollama/ollama:latest (pinned SHA256 digest)", "python:3.11-slim (pinned SHA256 digest)"
+    gpu_passthrough: "nvidia-container-toolkit with --gpus all"
+    network_isolation: "Inference containers executed with --network none to guarantee zero external API leakage during RAG/closed-book generation"
+    reproducibility_controls[4]:
+      - "temperature = 0.0 and top_p = 1.0 for primary deterministic runs"
+      - "Fixed seed = 42 across Python, NumPy, PyTorch, and Ollama options"
+      - "3-seed sensitivity sweep (seeds 42, 1337, 2026 at temperature = 0.3) on top-performing configuration"
+      - "Full telemetry logged to local MLflow tracking server and self-hosted Langfuse trace store"
+  archiving_and_typesetting_pipeline:
+    version_control: "GitHub repository (git@github.com:12W6PIE/Class.pro.git) managed via .agents/skills/skill_git_sync"
+    dataset_and_code_doi: "GitHub Release v1.0.0 bridged to Zenodo (CERN Data Centre, <50GB limit) minting a permanent DataCite DOI for the 300-item OpenStax Python QA benchmark and evaluation harness"
+    bibliography_management: "Zotero with Better BibTeX auto-exporting to _Deliverables/references.bib"
+    manuscript_typesetting: "LaTeX (Overleaf / local TeX Live) starting from _Deliverables/1-Page-Brief.tex"
+```
