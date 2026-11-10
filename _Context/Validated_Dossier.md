@@ -81,3 +81,50 @@ To satisfy the **Continuous Progress Rule**, the student must bridge four concre
 - **`N5` (Experimental Design):** Selected **Option A (Two-Study Sequential Design)** — Study 1 ablates chunking/retrieval on a fixed `8B Q4_K_M` backbone ($3 \times 300 = 900$ runs); Study 2 evaluates `{3B, 8B} × {Q4_K_M, Q5_K_M, Q8_0} + 14B Q4_K_M` ($7 \times 300 \times 2 = 4,200$ runs) using the optimal retriever from Study 1.
 - **`N6` (Judge Reliability):** Selected **Option B + C** — cross-checked NLI entailment verifier (`DeBERTa-v3-MNLI`) + Gemini Free Tier rubric judge, validated against $100$ human-annotated responses via Cohen's $\kappa$.
 - **`N7` (Reproducibility):** Selected **Option A + B** — `temperature = 0`, fixed seeds, SHA-256 model digests, MLflow logging, plus a 3-seed sensitivity check at $T = 0.3$ on the top configuration.
+
+
+---
+
+## Candidate Bounded Domains (Class 1 Output)
+
+> **Selection Guidance:** Each candidate below forces mastery of your four `[new]` Developmental Delta pillars (IR/RAG Evaluation Science, Psychometric Judge Calibration & Non-Parametric Statistics, Contamination-Controlled Experimental Design, and Reproducible LLMOps under a $12\text{ GB}$ VRAM ceiling) and operates under the **AI-Domain Exception** (Set `1a` + `1b` as the primary scholarly output, supported by a Zenodo-archived benchmark with a permanent DataCite DOI).
+
+### Candidate 1 (Primary Recommended): Quantization $\times$ Retrieval Interaction on Faithfulness and Abstention in Educational RAG
+- **Bounded Domain:**
+  - *In-Scope:* OpenStax *Introduction to Python Programming* (`CC BY 4.0`, English); a human-verified 300-item QA benchmark ($255$ answerable with span-level gold evidence, $45$ unanswerable abstention probes); Study 1 retrieval ablation (naive fixed-size chunking + dense retrieval vs. Markdown/AST structure-aware chunking + dense retrieval vs. structure-aware chunking + hybrid BM25/dense + cross-encoder reranking) on a fixed `8B Q4_K_M` generator; Study 2 quantization/scale matrix (`{3B, 8B} × {Q4_K_M, Q5_K_M, Q8_0} + 14B Q4_K_M`) paired with a closed-book no-retrieval baseline on an RTX 4070 (`12 GB VRAM`).
+  - *Out-of-Scope:* Multimodal diagram/image OCR, fine-tuning / LoRA weight training, multi-turn conversational memory, models exceeding $12\text{ GB}$ VRAM (`14B Q8_0`), and live student classroom trials.
+- **Core Hypothesis & Expected Scientific Delta:**
+  - *Hypothesis:* Aggressive weight quantization (`Q4_K_M` vs. `Q8_0`) degrades **unanswerable abstention F1** and **claim-level faithfulness** under noisy top-$k$ retrieval significantly more than it degrades standard answer correctness on answerable queries, and structure-aware hybrid retrieval with cross-encoder reranking partially compensates for sub-8B quantization loss.
+  - *Scientific Delta:* Quantifies the joint sensitivity surface of quantization bit-width and retrieval precision after subtracting pre-training parametric memorization ($\Delta \text{Correctness} = \text{Score}_{\text{RAG}} - \text{Score}_{\text{ClosedBook}}$), validated via dual NLI (`DeBERTa-v3-MNLI`) + human-calibrated LLM judging ($\kappa \ge 0.70$) and paired bootstrap confidence intervals.
+- **Target Publication Tier:** **Tier 3** (International Conference Proceedings, e.g., OCETA Connect 2027 / IEEE educational & applied AI tracks), with **Tier 2 (JCR Q3/Q4)** stretch potential.
+- **Career Trajectory Alignment:** Directly builds a portfolio-grade local RAG benchmarking harness, quantization/VRAM profiler, and reproducible `MLflow`/`Langfuse` pipeline sought in Applied AI / LLM Engineer interviews.
+
+### Candidate 2: Code- and Formula-Aware Structural Chunking vs. Naive Token Splitting for CS Textbook QA
+- **Bounded Domain:**
+  - *In-Scope:* Benchmarking syntax- and section-aware chunking strategies (preserving complete Python functions, trace tables, and worked code examples in OpenStax *Introduction to Python Programming*) against sliding-window token chunking ($256, 512, 1024$ tokens) across dense (`bge-base-en-v1.5`, `nomic-embed-text`) and sparse (`BM25`) retrievers, evaluated on code-tracing vs. conceptual questions using fixed `3B` and `8B` `Q4_K_M` generators.
+  - *Out-of-Scope:* Execution-guided code synthesis (sandboxed compiler feedback loops), multi-repository software engineering agents, and non-CS humanities textbooks.
+- **Core Hypothesis & Expected Scientific Delta:**
+  - *Hypothesis:* Standard fixed-window chunking bisects code blocks and trace explanations, causing a statistically significant drop in $\text{Recall@}k$ and downstream faithfulness on code-comprehension queries compared to AST/Markdown block-preserving chunking, even when total retrieved token budgets are held constant.
+  - *Scientific Delta:* Provides controlled empirical curves stratified by query taxonomy (conceptual definition vs. syntax rules vs. code execution tracing) with span-level IR metrics and NLI-verified generation faithfulness.
+- **Target Publication Tier:** **Tier 3** (International Conference Proceedings) or **Tier 4** (Course Publishing Repository fallback if structural gains prove domain-narrow).
+- **Career Trajectory Alignment:** Masters production document ingestion, AST-aware preprocessing, and hybrid indexing—the highest-leverage failure mode in enterprise technical-documentation RAG systems.
+
+### Candidate 3: Calibrating Small Local Evaluators vs. NLI Verifiers for Offline RAG Auditing
+- **Bounded Domain:**
+  - *In-Scope:* Meta-evaluation of automated RAG faithfulness and relevance judges runnable on a $12\text{ GB}$ RTX 4070 (`3B`–`14B` open-weight judges in Ollama, plus `DeBERTa-v3-large-MNLI` sentence-level entailment and a reference Gemini Free Tier rubric judge) against a double-annotated 150-item human gold standard drawn from the OpenStax Python RAG pipeline.
+  - *Out-of-Scope:* Training custom reward models, commercial paid judge APIs (GPT-4o/Claude paid tiers), and non-English evaluation corpora.
+- **Core Hypothesis & Expected Scientific Delta:**
+  - *Hypothesis:* Uncalibrated $\le 8\text{B}$ local LLM judges exhibit severe family self-preference bias and low agreement with human annotators ($\kappa < 0.50$) on subtle extrinsic hallucinations, whereas a lightweight sentence-level NLI decomposition pipeline (`DeBERTa-v3-MNLI`) achieves higher human agreement ($\kappa \ge 0.70$) at less than $10\%$ of the GPU compute cost.
+  - *Scientific Delta:* Delivers an empirically calibrated, zero-budget RAG evaluation protocol quantifying self-preference bias, positional bias, and quantization sensitivity of local LLM judges versus NLI entailment.
+- **Target Publication Tier:** **Tier 2 / Tier 3** (JCR Q3/Q4 or international NLP/evaluation workshop proceedings).
+- **Career Trajectory Alignment:** Directly targets evaluation engineering and automated CI/CD regression gating—a critical specialization for production LLM Engineers.
+
+### Candidate 4: Parametric Memorization vs. Contextual Grounding via Counterfactual Perturbations in Local RAG
+- **Bounded Domain:**
+  - *In-Scope:* Constructing a paired factual vs. counterfactual textbook evaluation set (systematically mutating operator precedence rules, standard library defaults, and Complexity bounds in OpenStax Python passages) to measure whether quantized local LLMs (`3B`, `8B`, `14B` at `Q4_K_M`–`Q8_0`) obey retrieved context or revert to pre-training priors.
+  - *Out-of-Scope:* Model weight editing (ROME/MEMIT), continual pre-training, and adversarial jailbreak security testing.
+- **Core Hypothesis & Expected Scientific Delta:**
+  - *Hypothesis:* On unmodified open textbooks, closed-book parametric memory accounts for $>50\%$ of apparent RAG accuracy; under counterfactual context perturbations, lower-bit quantization (`Q4_K_M`) increases **parametric override rate** (ignoring retrieved evidence in favor of pre-training priors) relative to `Q8_0`.
+  - *Scientific Delta:* Separates true context-following capability from benchmark contamination in local quantized RAG using paired factual/counterfactual accuracy and abstention deltas.
+- **Target Publication Tier:** **Tier 2 / Tier 3** (JCR Q3/Q4 or international conference proceedings).
+- **Career Trajectory Alignment:** Equips the engineer to diagnose and mitigate stale-knowledge override when deploying RAG over rapidly changing internal APIs and proprietary company documentation.
