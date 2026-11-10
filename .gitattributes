@@ -1,0 +1,12 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Explicit Unix (LF) line endings (Mandatory: prevents macOS/Linux bash syntax crashes)
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.tex text eol=lf
+
+# Explicit Windows (CRLF) line endings (Mandatory: Windows cmd wrappers)
+*.cmd text eol=crlf
+*.bat text eol=crlf
