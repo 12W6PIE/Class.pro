@@ -1,0 +1,64 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{top=1.5cm, bottom=1.5cm, left=1.8cm, right=1.8cm}
+\usepackage{titlesec}
+\titleformat{\section}{\small\bfseries\scshape}{}{0pt}{}[\titlerule]
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+\usepackage{enumitem}
+\setlist{noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    {\large \textbf{COURSE COMPLETION PROJECT BRIEF: 1-PAGE RESEARCH CHARTER}}\\[2pt]
+    \textbf{Course:} AI Engineering \quad | \quad \textbf{Supervisor:} PhD Academic Lead \quad | \quad \textbf{Date:} November 2026\\[4pt]
+    \textbf{Student Felix ID:} 12 \quad | \quad \textbf{Degree Milestone:} Bachelor of Science Thesis (Computer Science, 5th Semester)
+\end{center}
+
+\vspace{-4pt}
+
+\section{Working Titles}
+\begin{enumerate}
+    \item \textbf{Primary:} Quantization Versus Retrieval Precision: Evaluating Faithfulness and Abstention in Local Retrieval-Augmented Generation Over Computer Science Textbooks Under Consumer Hardware Constraints
+    \item \textbf{Alternative A:} Resource-Constrained Educational RAG: How GGUF Weight Quantization and Hybrid Structural Retrieval Interact to Govern Hallucination and Abstention on Consumer Hardware
+    \item \textbf{Alternative B:} Beyond Parametric Memorization: Contamination-Controlled Benchmarking of Quantized Open-Weight LLMs and Hybrid Retrieval Over Openly Licensed Programming Curricula
+\end{enumerate}
+
+\section{Project Idea \& Motivation}
+Deploying Retrieval-Augmented Generation (RAG) assistants for university programming courses on consumer laptop hardware without a dedicated GPU requires aggressive weight quantization (4-bit to 8-bit GGUF) and compact open-weight models (3B-14B parameters). While general RAG chunking is well studied, two critical methodological flaws undermine existing local educational evaluations: (1) failure to control for pre-training parametric memorization of public textbooks, and (2) uncalibrated evaluation of how low-bit quantization interacts with retrieval noise to degrade claim-level faithfulness and unanswerable query abstention. This project constructs a reproducible, network-isolated (\texttt{--network none}) local RAG evaluation harness and releases a human-verified 300-item QA benchmark (255 answerable with gold evidence spans, 45 unanswerable abstention probes) over the CC BY 4.0 OpenStax textbook \textit{Introduction to Python Programming} to quantify the joint sensitivity of quantization bit-width and hybrid structural retrieval.
+
+\section{Bounded Domain \& Scientific Delta (SOTA Alignment)}
+\begin{itemize}
+    \item \textbf{Target Domain Scope:} \textit{In-Scope:} OpenStax Python textbook (CC BY 4.0); 300-item verified QA benchmark; Study 1 retrieval ablation (fixed-size dense vs.\ AST/Markdown structure-aware dense vs.\ structure-aware hybrid BM25+dense with cross-encoder reranking) on an 8B Q4\_K\_M backbone; Study 2 quantization matrix (\{3B, 8B\} $\times$ \{Q4\_K\_M, Q5\_K\_M, Q8\_0\} + 14B Q4\_K\_M) vs.\ closed-book no-retrieval baseline split across local Windows 11 CPU (AMD Ryzen 7 5825U, 16 GB RAM) and Google Colab Free T4 (16 GB VRAM) sharded batches. \textit{Out-of-Scope:} Weight fine-tuning, multimodal OCR, models exceeding consumer memory limits (14B Q8\_0), and live classroom trials.
+    \item \textbf{Scientific Baseline (SOTA):} Grounded against foundational RAG and IR benchmarks in WoS/Scopus/OpenAlex: Lewis et al.\ (2020), BEIR (Thakur et al., 2021), SQuAD 2.0 abstention (Rajpurkar et al., 2018), RAGAS (Es et al., 2024), ARES (Saad-Falcon et al., 2024), and post-training quantization literature (Frantar et al., 2023; Dettmers et al., 2023).
+    \item \textbf{Expected Scientific Delta:} Isolates net retrieval gain ($\Delta \text{Correctness} = \text{Score}_{\text{RAG}} - \text{Score}_{\text{ClosedBook}}$) and demonstrates whether hybrid reranked retrieval compensates for 4-bit quantization loss on claim-level faithfulness and abstention F1, verified via NLI entailment (\texttt{DeBERTa-v3-MNLI}), human-calibrated LLM judging (Cohen's $\kappa \ge 0.70$), and paired bootstrap 95\% confidence intervals.
+\end{itemize}
+
+\section{Developmental Delta (Continuous Progress Rule)}
+\begin{itemize}
+    \item \textbf{Current Student Baseline:} Recalibrated honest software baseline in Python (7/10), Git/GitHub (8/10), Prompt Engineering (9/10), PyTorch (6/10), Scikit-Learn (6/10), SQL (6/10), Linux/Bash (5/10), and introductory Docker (3/10), with zero prior formal training in IR evaluation metrics, psychometric judge calibration, contamination controls, or LLMOps observability.
+    \item \textbf{Specific Skill/Architecture Gaps to Bridge:} Master four new engineering pillars plus practical Docker containerization: (1) rank-aware IR metrics ($\text{Recall@}k, \text{MRR}, \text{nDCG}$) and claim-level NLI verification; (2) human annotation reliability (Cohen's $\kappa$ on 100 items) and paired bootstrap / Wilcoxon hypothesis testing with Holm-Bonferroni correction; (3) closed-book contamination control and abstention F1 benchmarking; and (4) reproducible LLMOps (\texttt{MLflow} experiment tracking, \texttt{Langfuse} tracing, pinned Ollama SHA-256 digests, and RAM/VRAM latency profiling).
+\end{itemize}
+
+\section{Tooling Architecture \& Automated Pipelines}
+\begin{itemize}
+    \item \textbf{Agent Governance:} Google Antigravity IDE (\texttt{01\_ideation\_ceo}) + NotebookLM MCP for WoS/Scopus/OpenAlex synthesis and Zotero Better BibTeX citation management.
+    \item \textbf{Compute \& Sandboxing:} Split execution across Windows 11 Lenovo IdeaPad Slim 3 laptop CPU (AMD Ryzen 7 5825U, 16 GB RAM / 13.8 GB usable, integrated AMD Radeon Graphics 2 GB VRAM: ingestion, embeddings, reranking, IR metrics, NLI verification, compact CPU smoke tests) and Google Colab Free Tier T4 (16 GB VRAM: sharded, resumable batch generation with checkpointing), tracked in \texttt{MLflow} and \texttt{Langfuse} with network-isolated Docker (\texttt{--network none}).
+    \item \textbf{Artifact Archiving:} GitHub repository (\texttt{12W6PIE/Class.pro}) releases bridged to Zenodo (CERN Data Centre) minting a permanent DataCite DOI for the 300-item CC-BY QA benchmark, evaluation code, and raw generation logs.
+\end{itemize}
+
+\section{Course Deliverables Mapping}
+\begin{itemize}
+    \item \textbf{Track 1(a) AI Tech Utilization Report:} Comprehensive engineering manual detailing Docker \texttt{--network none} sandboxing, GGUF RAM/VRAM budgeting, \texttt{MLflow}/\texttt{Langfuse} telemetry, NLI + LLM judge calibration, and Antigravity/MCP workflow orchestration.
+    \item \textbf{Track 1(b) AI Tech Draft Manuscript:} Primary scientific manuscript reporting the two-study empirical evaluation of quantization $\times$ retrieval interactions on faithfulness, net RAG gain over closed-book memory, and unanswerable abstention.
+    \item \textbf{Track 2(a) Domain Deliverables Report:} Dataset documentation, schema specification, and Zenodo DataCite DOI release notes for the 300-item OpenStax Python QA benchmark and reproducible evaluation harness.
+    \item \textbf{Track 2(b) Domain Draft Manuscript:} Unified with Track 1(b) under the AI-Domain Exception Rule, incorporating educational CS error-taxonomy analysis (syntax vs.\ conceptual vs.\ code-tracing queries).
+    \item \textit{AI Domain Exception Applied:} YES - because the core research domain is AI Technology (resource-constrained RAG evaluation and quantization methodology), Track 1(a) and Track 1(b) fulfill the primary course mandate, supported by the Zenodo-archived benchmark artifact in Track 2(a).
+\end{itemize}
+
+\section{Statement of Publishing Level Assessment}
+\textbf{Assessment:} Target \textbf{Tier 3 (International Conference Proceedings, e.g., OCETA Connect 2027 or IEEE/ACM applied AI \& CS education venues)}, with stretch potential for \textbf{Tier 2 (JCR Q3/Q4 indexed journal)} if the quantization $\times$ abstention interaction yields statistically significant cross-family findings ($\kappa \ge 0.70$, Holm-Bonferroni $p < 0.05$) and a reusable public benchmark. If empirical effect sizes between quantization tiers prove statistically indistinguishable on the 300-item sample, the rigorous negative/null methodology and Zenodo-archived dataset are guaranteed routing to \textbf{Tier 4 (Internal Semi-Scientific Course Publishing Service Database)}.
+
+\end{document}
